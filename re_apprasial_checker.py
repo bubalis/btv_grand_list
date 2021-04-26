@@ -8,13 +8,11 @@ Created on Fri Apr 16 16:56:56 2021
 import os
 import pandas as pd
 import geopandas as gpd
-import matplotlib.pyplot as plt
-import seaborn as sns
 from bokeh.plotting import figure, save
-from bokeh.models import ColumnDataSource, HoverTool, ResetTool, LogColorMapper, ColorBar, BoxZoomTool, PanTool
-from bokeh.palettes import  viridis as palette
-from bokeh.models import LogColorMapper, LinearColorMapper
-
+from bokeh.models import ColumnDataSource, DataTable, HoverTool, ResetTool, LogColorMapper, ColorBar, BoxZoomTool, PanTool
+from bokeh.palettes import  viridis
+from bokeh.models import LogColorMapper, Title, Label, LinearColorMapper
+from bokeh.io import show
 
 def getPolyCoords(row, geom, coord_type):
     """Returns the coordinates ('x' or 'y') of edges of a Polygon exterior
@@ -95,12 +93,13 @@ g_gdf['PreviousAppraisedValue'] = g_gdf['PreviousAppraisedValue'].apply(format_d
 gsource = ColumnDataSource(g_gdf)
 osource = ColumnDataSource(outline[['x', 'y']])
 
-color_mapper = LinearColorMapper(palette=palette, low = 0, high = 200)
+color_mapper = LinearColorMapper(palette=viridis(100), low = 0, high = 200)
 
 display_list = [(n, f'@{n}') for n in ['PropertyAddress','PreviousAppraisedValue',
        'CurrentAppraisedValue', 'Percent_change',
        'LandUseCode', 'OwnerName1']]
 
+#add ts
 hover = HoverTool(tooltips = display_list)
 zoom = BoxZoomTool()
 pan = PanTool()
@@ -116,12 +115,19 @@ p.patches('x', 'y', source=gsource,
          fill_color={'field': 'Percent_change', 'transform': color_mapper},
          fill_alpha=1.0, line_color="black", line_width=0.05)
 
+msg = 'Download the code for this visualization at https://github.com/bubalis/btv_grand_list'
+caption = Title(text=msg)
+p.add_layout(caption, 'below')
+
 outfp = 'btv_reapp1.html'
+
+show(p)
 save(p, outfp)
 
 
 
 #%%
+'''
 homes = ['R1 - Single Fam', 'R2 - 2 Family', 'R3 - 3 Family',
        'R4 - 4 Family']
 ax = outline.plot(color = 'w', edgecolor = 'k')
@@ -140,4 +146,4 @@ dfh['PreviousAppraisedValue ($1000s)'] =  dfh['PreviousAppraisedValue']/1000
 dfh['CurrentAppraisedValue ($1000s)'] =  dfh['CurrentAppraisedValue']/1000
 sns.scatterplot('PreviousAppraisedValue ($1000s)', 'CurrentAppraisedValue ($1000s)', data = dfh,  
                 hue = 'LandUseCode')
-(dfh['CurrentAppraisedValue']/ dfh['PreviousAppraisedValue']).mean()
+(dfh['CurrentAppraisedValue']/ dfh['PreviousAppraisedValue']).mean()'''
