@@ -1,8 +1,16 @@
 This repo contains projects related to Burlington VT property assessments. 
 
-The script grand_list_parser.py parses a pdf table version on the grand list to extract it into a csv file.
+Primarily, it contains the code to make the data visualization found here: https://bubalis.github.io/btv_reappraisal.html 
+
+The newspaper Seven Days eventually made a much slicker version of this visualization (see here: https://www.sevendaysvt.com/vermont/burlingtons-property-reassessment-has-set-record-high-values-whats-the-cost-to-residents/Content?oid=32909386)
+but I beat them to it by several weeks!
+
+
+
+The script grand_list_parser.py parses a pdf table version on the grand list (all the assessed propery values in the city) to extract it into a csv file.
 
 The script reappraisal_checker.py builds an interactive bokeh figure of Burlington re-appraisal data.
+
 
 To run this the reappraisal script, you need to download parcel data from vermont open geodata. 
 From this url:
