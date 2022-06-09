@@ -9,7 +9,7 @@ but I beat them to it by several weeks!
 
 The script grand_list_parser.py parses a pdf table version on the grand list (all the assessed propery values in the city) to extract it into a csv file.
 
-The script reappraisal_checker.py builds an interactive bokeh figure of Burlington re-appraisal data.
+The script interactive_figure.py builds an interactive bokeh figure of Burlington re-appraisal data.
 
 
 To run this the reappraisal script, you need to download parcel data from vermont open geodata. 
